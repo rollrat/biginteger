@@ -356,7 +356,7 @@ BigBase::this_type BigBase::operator-(const this_type& integer) const
 
 BigBase::this_type& BigBase::operator*=(const this_type& integer)
 {
-  size_t   len = (length + 1) * (integer.length + 1);
+  size_t   len = length + integer.length + 2;
   uint32_t *u = new uint32_t[len];
   uint32_t carry = 0;
 
@@ -821,7 +821,7 @@ void BigBase::init_hex(std::string hex)
 void BigBase::init_decimal(std::string dec)
 {
   size_t len = dec.length();
-  size_t estimate = len * 4;
+  size_t estimate = len / 9 + 1;
 
   allocate(estimate);
   memset(blocks, 0, sizeof(uint32_t) * estimate);
