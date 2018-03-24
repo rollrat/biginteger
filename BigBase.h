@@ -14,25 +14,23 @@
 #define _BIGBASE_9bf1541fdf7efd41b7b39543fd870ac4_
 
 #include <stdint.h>
-#include <memory>
-#include <string>
 #include <cassert>
 #include <iostream>
+#include <memory>
+#include <string>
 
-namespace ofw
-{
+namespace ofw {
 
-class BigBase
-{
+class BigBase {
   typedef BigBase this_type;
 
-  uint32_t *blocks = nullptr;
-  size_t    length = 0;
+  uint32_t* blocks = nullptr;
+  size_t length = 0;
 
-public:
-
+ public:
   BigBase();
   BigBase(uint32_t uiptr);
+  BigBase(this_type&& refer);
   BigBase(const this_type& refer);
   BigBase(const char* str);
   BigBase(const std::string str);
@@ -42,6 +40,7 @@ public:
   void aly_hex(const std::string str);
   void aly_dec(const std::string str);
 
+  this_type& operator=(this_type&& refer);
   this_type& operator=(const this_type& integer);
 
   this_type& operator<<=(uint32_t len);
@@ -84,13 +83,12 @@ public:
 
   size_t _length() const;
 
-private:
-
+ private:
   inline uint32_t div_shift(uint32_t v, int c, bool inv = false);
   inline uint32_t div_multiget(const uint32_t* v, size_t s, int sh);
 
   void divideWithRemainder(const this_type& integer, bool quotient,
-    uint32_t *quotient_array = nullptr);
+                           uint32_t* quotient_array = nullptr);
 
   void init();
 
@@ -107,9 +105,8 @@ private:
 
   int count_leading_zero(uint32_t val) const;
   int count_tailing_zero(uint32_t val) const;
-
 };
 
-}
+}  // namespace ofw
 
 #endif
